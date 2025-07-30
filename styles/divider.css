@@ -1,0 +1,49 @@
+.divider {
+    position: relative;
+    z-index: -1;
+    width: 100%;
+    max-width: 1200px;
+    height: 1px;
+    margin: 70px auto;
+    border-bottom: 1px dashed var(--divider);
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 50%;
+    border: 2px dashed var(--divider);
+    
+}
+
+.divider::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 5px dashed var(--theme);
+    animation: pulseDivider 1s infinite alternate;
+    animation-delay: 1s;
+}
+
+@keyframes pulseDivider {
+    0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        border: 4px dashed var(--theme);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5) rotate(360deg);
+        border-width: 1px;
+    }
+}

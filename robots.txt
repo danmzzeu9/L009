@@ -1,0 +1,8 @@
+# Permitir todos os bots acessarem o site
+User-agent: *
+
+# Permitir acesso total ao conteúdo
+Disallow:
+
+# Sitemap
+Sitemap: https://l009.com.br/sitemap.xml

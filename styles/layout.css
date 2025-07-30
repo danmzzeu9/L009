@@ -1,0 +1,145 @@
+/* Basics */
+header,
+main,
+footer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+footer { margin-bottom: 50px; }
+
+footer section { 
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    row-gap: 5px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+footer section:last-child { 
+    justify-content: flex-end; 
+    text-align: right; 
+}
+
+@media all and (max-width: 768px) {
+    footer section i { display: none; }
+    footer section { justify-content: center; align-items: center; }
+    footer section:last-child { 
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* Colors */
+h1, h2, h3, h4, h5, h6 { color: var(--primary); }
+
+p, ul li { color: var(--secondary); }
+
+a, a:visited { color: var(--primary); }
+
+a:hover { color: var(--theme); }
+
+a:hover i { color: var(--primary); }
+
+i { color: var(--theme); }
+
+small { color: var(--tertiary); }
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 { 
+    text-transform: uppercase;
+    line-height: 1.3;
+}
+
+h1 { font-size: clamp(1.4rem, 4vw, 1.6rem); }
+h2 { font-size: clamp(1.2rem, 3.5vw, 1.4rem); }
+h3 { font-size: clamp(1rem, 3vw, 1.2rem); }
+
+p,
+button, 
+a,
+ul li { 
+    width: fit-content;
+    font-size: clamp(12px, 2vw, 14px);
+}
+
+p.italic { font-style: italic; }
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    list-style: none;
+}
+  
+ul li::before {
+    content: "●";
+    color: var(--primary);
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+}
+
+i {
+    vertical-align: middle;
+    margin-right: 7px;
+    font-size: clamp(18px, 2.5vw, 18px);
+}
+
+small { font-size: clamp(12px, 2vw, 12px); }
+
+/* Grid */
+.grid {
+    display: grid;
+    gap: 15px;
+}
+
+.g-1 { grid-template-columns: 1fr; }
+.g-2 { grid-template-columns: repeat(2, 1fr); }
+.g-3 { grid-template-columns: repeat(3, 1fr); }
+.g-4 { grid-template-columns: repeat(4, 1fr); }
+
+.gap-5 { gap: 5px; }
+.gap-10 { gap: 10px; }
+.gap-15 { gap: 15px; }
+.gap-20 { gap: 20px; }
+.gap-25 { gap: 25px; }
+.gap-30 { gap: 30px; }
+.gap-35 { gap: 35px; }
+.gap-40 { gap: 40px; }
+.gap-45 { gap: 45px; }
+.gap-50 { gap: 50px; }
+.gap-55 { gap: 55px; }
+.gap-60 { gap: 60px; }
+.gap-65 { gap: 65px; }
+.gap-70 { gap: 70px; }
+.gap-75 { gap: 75px; }
+.gap-80 { gap: 80px; }
+.gap-85 { gap: 85px; }
+.gap-90 { gap: 90px; }
+.gap-95 { gap: 95px; }
+.gap-100 { gap: 100px; }
+.gap-150 { gap: 150px; }
+.gap-200 { gap: 200px; }
+
+@media all and (max-width: 1200px) {
+    .g-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .g-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+}
+
+@media all and (max-width: 992px) {
+    .g-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .g-3, .g-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+}
+
+@media all and (max-width: 768px) {
+    .g-2, .g-3, .g-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+}
+
+@media all and (max-width: 576px) {
+    .g-2, .g-3, .g-4 { grid-template-columns: 1fr; }
+}

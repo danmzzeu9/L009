@@ -1,0 +1,111 @@
+.infinite {
+    position: relative;
+    top: -25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    height: 500px;
+}
+
+.infinite-subtitle {
+    position: absolute;
+    top: 320px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--tertiary);
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.infinite-letter {
+    font-size: 90px;
+    color: var(--primary);
+    font-family: "Saira", sans-serif !important;
+    font-weight: 500;
+}
+
+.infinite-container {
+    display: flex;
+    width: 130px;
+    align-items: center;
+    justify-content: center;
+}
+
+.infinite-container .infinite-circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0 -3.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infinite-container .infinite-circle:nth-child(2) {
+    transform: rotate(-180deg);
+}
+
+.infinite-container .infinite-circle span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(calc(18deg * var(--i)));
+}
+
+.infinite-container .infinite-circle span::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 7px);
+    right: 0;
+    width: 7px;
+    height: 15px;
+    border-radius: 50%;
+    transform: scale(0.1);
+    animation: infiniteCircle 4s linear infinite;
+    animation-delay: calc(0.1s * var(--i));
+}
+
+.infinite-container .infinite-circle:nth-child(2) span::before {
+    animation-delay: calc(-0.1s * var(--i));
+}
+
+@keyframes infiniteCircle {
+    0% {
+        transform: scale(1.2) rotate(180deg);
+        background-color: var(--theme);
+        box-shadow:
+            0 0 15px var(--theme),
+            0 0 30px var(--theme),
+            0 0 60px var(--theme),
+            0 0 90px var(--theme);
+        filter: blur(2px);
+    }
+    50%, 100% {
+        transform: scale(0.1);
+        box-shadow: none;
+        filter: blur(0);
+    }
+}
+
+@media all and (max-width: 800px) {
+    .infinite { 
+        height: 300px; 
+        top: -20px; 
+    }
+    .infinite-subtitle { top: 200px; }
+    .infinite-letter { font-size: 75px; }
+    .infinite-container { width: 110px; }
+    .infinite-container .infinite-circle span::before {
+        box-shadow:
+            0 0 10px var(--theme),
+            0 0 20px var(--theme),
+            0 0 40px var(--theme),
+            0 0 60px var(--theme);
+    }
+}

@@ -1,0 +1,32 @@
+#cursor {
+    position: fixed;
+    z-index: 50;
+    transition: transform 0.1s;
+    pointer-events: none;
+}
+
+.fragment {
+    overflow: hidden;
+    position: absolute;
+    z-index: 50;
+    background: var(--primary);
+    pointer-events: none;
+    width: 5px;
+    height: 5px;
+    scale: 0;
+    transition: 1s;
+    border-radius: 50%;
+    filter: 
+        drop-shadow(0 0 5px var(--primary))
+        drop-shadow(0 0 15px var(--primary))
+        drop-shadow(0 0 30px var(--primary));
+}
+
+body:hover .fragment {
+    scale: 1;
+}
+
+@media all and (max-width: 900px) {
+    #cursor { display: none; }
+    .fragment { display: none; }
+}
