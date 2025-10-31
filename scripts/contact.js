@@ -3,6 +3,9 @@ const contactError = document.getElementById('contact-error');
 const contactStatus = document.getElementById('contact-status');
 const contactButton = document.getElementById('contact-button');
 
+// *** SUBSTITUA ESTE VALOR PELA URL DO SEU GOOGLE APPS SCRIPT ***
+const SPREADSHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxs4gwe4OzwEmn4JFSYlmb5aa6aQK519nnYoMd5r509ZpWOGfAYh_d_4KPPLIGMmvYW/exec';
+
 contactForm.addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -21,6 +24,7 @@ contactForm.addEventListener('submit', async function(event) {
     let isValid = true;
     let errorMessage = [];
 
+    // --- Validações (mantidas do seu código original) ---
     if (contactName === '') {
         errorMessage.push('O campo <strong>Nome completo</strong> é obrigatório.<br>');
         isValid = false;
@@ -40,6 +44,7 @@ contactForm.addEventListener('submit', async function(event) {
         errorMessage.push('O campo <strong>Mensagem</strong> é obrigatório.<br>');
         isValid = false;
     }
+    // ----------------------------------------------------
 
     if (!isValid) {
         contactError.innerHTML = errorMessage.join('');
@@ -48,54 +53,53 @@ contactForm.addEventListener('submit', async function(event) {
         contactButton.disabled = true;
 
         if (contactStatus) {
-            contactStatus.textContent = 'Enviando...';
+            contactStatus.textContent = 'Enviando dados para a planilha...';
             contactStatus.style.display = 'block';
         } else {
-            contactError.innerHTML = 'Enviando...';
+            contactError.innerHTML = 'Enviando dados para a planilha...';
             contactError.style.display = 'block';
         }
 
-        const fullMessage = `
-            <p><strong>Nome:</strong> ${contactName}</p>
-            <p><strong>Telefone:</strong> ${contactPhone}</p>
-            <p><strong>Assunto:</strong> ${contactSubject}</p>
-            <p><strong>Mensagem:</strong><br>${contactMessage.replace(/\n/g, '<br>')}</p>
-        `;
-
-        const emailData = {
-            to: "contato@l009.com.br",
-            subject: `L009 - Novo Contato: ${contactSubject}`,
-            text: `Nome: ${contactName}\nTelefone: ${contactPhone}\nAssunto: ${contactSubject}\nMensagem: ${contactMessage}`,
-            html: fullMessage
+        // Prepara os dados para o Apps Script
+        const spreadsheetData = {
+            name: contactName,
+            phone: contactPhone,
+            subject: contactSubject,
+            message: contactMessage
         };
 
         try {
-            const response = await fetch('https://server.l009.com.br/apis/sendmail/', {
+            // A requisição agora aponta para o seu Apps Script
+            const response = await fetch(SPREADSHEET_ENDPOINT, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    // O Apps Script espera JSON no body
+                    'Content-Type': 'application/json' 
                 },
-                body: JSON.stringify(emailData)
+                body: JSON.stringify(spreadsheetData)
             });
 
             if (contactStatus) {
                 contactStatus.style.display = 'none';
             }
+            
+            // O Apps Script sempre retorna um JSON, mesmo em caso de sucesso
+            const data = await response.json(); 
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error(errorData.error || 'Erro desconhecido ao enviar email.');
+            if (data.result === 'error') {
+                console.error('Erro ao salvar na planilha:', data.message);
                 contactError.innerHTML = 'Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.';
                 contactError.style.display = 'block';
                 return;
             }
 
-            const data = await response.json();
-            console.log(data.message);
+            // Sucesso!
+            console.log(data.message); 
 
-            contactError.innerHTML = 'Sua mensagem foi enviada com sucesso!';
+            contactError.innerHTML = 'Sua mensagem foi enviada e registrada com sucesso na planilha!';
             contactError.style.display = 'block';
             contactForm.reset();
+
         } catch (error) {
             if (contactStatus) {
                 contactStatus.style.display = 'none';

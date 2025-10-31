@@ -46,7 +46,7 @@ body {  background-color: #000; }
 ::-webkit-scrollbar-thumb { background: #333; }
 ::-webkit-scrollbar-thumb:hover {  background: #fff; }
 
-.hidden { display: none; }
+.hidden { display: none !important; }
 
 @media all and (max-width: 1200px) {
     body { padding-inline: 20px; }
