@@ -21,6 +21,7 @@ contactForm.addEventListener('submit', async function(event) {
     let isValid = true;
     let errorMessage = [];
 
+    // --- Bloco de Validação (Mantido) ---
     if (contactName === '') {
         errorMessage.push('O campo <strong>Nome completo</strong> é obrigatório.<br>');
         isValid = false;
@@ -77,8 +78,13 @@ contactForm.addEventListener('submit', async function(event) {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error(errorData.error || 'Erro desconhecido ao enviar email.');
-                contactError.innerHTML = 'Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.';
+                const detailedError = errorData.details 
+                    ? `Erro interno detalhado: ${errorData.details}` 
+                    : 'Erro desconhecido ao enviar e-mail.';
+
+                console.error(detailedError);
+                
+                contactError.innerHTML = 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.';
                 contactError.style.display = 'block';
                 return;
             }
@@ -93,7 +99,9 @@ contactForm.addEventListener('submit', async function(event) {
             if (contactStatus) {
                 contactStatus.style.display = 'none';
             }
-            console.error(error);
+        
+            console.error("Falha na Rede ou Bloqueio CORS:", error);
+            
             contactError.innerHTML = 'Houve um problema de conexão. Verifique sua internet ou tente novamente.';
             contactError.style.display = 'block';
         } finally {
