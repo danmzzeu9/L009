@@ -37,7 +37,7 @@ contactForm.addEventListener('submit', async function(event) {
         const formData = { contactName, contactPhone, contactSubject, contactMessage };
 
         try {
-            const response = await fetch('https://sendmail.l009.com.br/', {
+            const response = await fetch('https://l009-production.up.railway.app/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
