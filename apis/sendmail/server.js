@@ -11,7 +11,7 @@ app.use(cors());
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
-  secure: process.env.SMTP_SECURE,
+  secure: process.env.SMTP_SECURE === "true",
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -26,7 +26,7 @@ app.post("/", async (req, res) => {
   }
 
   const content = `
-    <h3>New contact message</h3>
+    <h3>New contact from website</h3>
     <p><strong>Name:</strong> ${contactName}</p>
     <p><strong>Phone:</strong> ${contactPhone}</p>
     <p><strong>Subject:</strong> ${contactSubject}</p>
@@ -41,10 +41,8 @@ app.post("/", async (req, res) => {
       html: content,
     });
 
-    console.log("Email sent successfully");
-    res.json({ success: true, message: "Email sent successfully" });
+    res.json({ success: true, message: "Email sent successfully!" });
   } catch (error) {
-    console.error("Error sending email:", error);
     res.status(500).json({
       success: false,
       message: "Failed to send email.",
