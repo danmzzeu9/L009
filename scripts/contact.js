@@ -21,18 +21,18 @@ contactForm.addEventListener('submit', async function(event) {
     let isValid = true;
     let errorMessage = [];
 
-    if (contactName === '') { errorMessage.push('The <strong>Name</strong> field is required.<br>'); isValid = false; }
-    if (contactPhone === '') { errorMessage.push('The <strong>Phone</strong> field is required.<br>'); isValid = false; }
-    if (contactSubject === '') { errorMessage.push('The <strong>Subject</strong> field is required.<br>'); isValid = false; }
-    if (contactMessage === '') { errorMessage.push('The <strong>Message</strong> field is required.<br>'); isValid = false; }
+    if (contactName === '') { errorMessage.push('O campo <strong>Nome</strong> é obrigatório.<br>'); isValid = false; }
+    if (contactPhone === '') { errorMessage.push('O campo <strong>Telefone</strong> é obrigatório.<br>'); isValid = false; }
+    if (contactSubject === '') { errorMessage.push('O campo <strong>Assunto</strong> é obrigatório.<br>'); isValid = false; }
+    if (contactMessage === '') { errorMessage.push('O campo <strong>Mensagem</strong> é obrigatório.<br>'); isValid = false; }
 
     if (!isValid) {
         contactError.innerHTML = errorMessage.join('');
         contactError.style.display = 'block';
     } else {
         contactButton.disabled = true;
-        if (contactStatus) { contactStatus.textContent = 'Sending...'; contactStatus.style.display = 'block'; }
-        else { contactError.innerHTML = 'Sending...'; contactError.style.display = 'block'; }
+        if (contactStatus) { contactStatus.textContent = 'Enviando...'; contactStatus.style.display = 'block'; }
+        else { contactError.innerHTML = 'Enviando...'; contactError.style.display = 'block'; }
 
         const formData = { contactName, contactPhone, contactSubject, contactMessage };
 
@@ -47,20 +47,20 @@ contactForm.addEventListener('submit', async function(event) {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error(errorData.details || 'Unknown error.');
-                contactError.innerHTML = 'There was an error sending your message. Please try again later.';
+                console.error(errorData.details || 'Erro desconhecido.');
+                contactError.innerHTML = 'Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.';
                 contactError.style.display = 'block';
                 return;
             }
 
             const data = await response.json();
-            contactError.innerHTML = 'Your message was sent successfully!';
+            contactError.innerHTML = 'Sua mensagem foi enviada com sucesso!';
             contactError.style.display = 'block';
             contactForm.reset();
         } catch (error) {
             if (contactStatus) contactStatus.style.display = 'none';
             console.error("Network or CORS error:", error);
-            contactError.innerHTML = 'Network error. Check your connection or try again.';
+            contactError.innerHTML = 'Erro de rede. Verifique sua conexão ou tente novamente.';
             contactError.style.display = 'block';
         } finally {
             contactButton.disabled = false;
