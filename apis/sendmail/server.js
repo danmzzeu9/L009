@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.post("/apis/sendmail", async (req, res) => {
+app.post("/", async (req, res) => {
   const { contactName, contactPhone, contactSubject, contactMessage } = req.body;
 
   if (!contactName || !contactPhone || !contactSubject || !contactMessage) {
