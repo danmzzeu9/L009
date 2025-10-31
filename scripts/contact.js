@@ -64,7 +64,7 @@ contactForm.addEventListener('submit', async function(event) {
 
         try {
             const response = await fetch('https://l009-sendmail-production.up.railway.app/sendmail', {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
