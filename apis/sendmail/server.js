@@ -5,26 +5,22 @@ import cors from "cors";
 
 dotenv.config();
 const app = express();
+
 app.set('trust proxy', 1);
 
 const allowedOrigins = [
   'https://l009.com.br',
-  // Adicione outras origens se necessário, ex: 'http://localhost:8080'
 ];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Permite requisições sem 'origin' (ex: mobile apps, ferramentas como Postman)
-    // OU se a origem estiver na lista de permitidas
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos que você usa
-  // Se estiver usando cookies ou autenticação
-  // credentials: true, 
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 
 app.use(cors(corsOptions));
