@@ -10,6 +10,10 @@
     animation: slideInFromTop 0.6s ease-out forwards;
 }
 
+.typer-letter {
+    visibility: hidden;
+}
+
 @keyframes slideInFromBottom {
     from {
         opacity: 0;
