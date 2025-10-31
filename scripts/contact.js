@@ -3,9 +3,6 @@ const contactError = document.getElementById('contact-error');
 const contactStatus = document.getElementById('contact-status');
 const contactButton = document.getElementById('contact-button');
 
-// *** SUBSTITUA ESTE VALOR PELA URL DO SEU GOOGLE APPS SCRIPT ***
-const SPREADSHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw1GQSqZX3oBHS4122n3BrUund3CGr6AD-pmIgJ39OHOPzFveX3t3J5iCKOxgngsO58/exec';
-
 contactForm.addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -24,7 +21,6 @@ contactForm.addEventListener('submit', async function(event) {
     let isValid = true;
     let errorMessage = [];
 
-    // --- Validações (mantidas do seu código original) ---
     if (contactName === '') {
         errorMessage.push('O campo <strong>Nome completo</strong> é obrigatório.<br>');
         isValid = false;
@@ -44,7 +40,6 @@ contactForm.addEventListener('submit', async function(event) {
         errorMessage.push('O campo <strong>Mensagem</strong> é obrigatório.<br>');
         isValid = false;
     }
-    // ----------------------------------------------------
 
     if (!isValid) {
         contactError.innerHTML = errorMessage.join('');
@@ -53,53 +48,47 @@ contactForm.addEventListener('submit', async function(event) {
         contactButton.disabled = true;
 
         if (contactStatus) {
-            contactStatus.textContent = 'Enviando dados para a planilha...';
+            contactStatus.textContent = 'Enviando...';
             contactStatus.style.display = 'block';
         } else {
-            contactError.innerHTML = 'Enviando dados para a planilha...';
+            contactError.innerHTML = 'Enviando...';
             contactError.style.display = 'block';
         }
 
-        // Prepara os dados para o Apps Script
-        const spreadsheetData = {
-            name: contactName,
-            phone: contactPhone,
-            subject: contactSubject,
-            message: contactMessage
+        const formData = {
+            contactName: contactName,
+            contactPhone: contactPhone,
+            contactSubject: contactSubject,
+            contactMessage: contactMessage
         };
 
         try {
-            // A requisição agora aponta para o seu Apps Script
-            const response = await fetch(SPREADSHEET_ENDPOINT, {
+            const response = await fetch('http://localhost:3000/apis/sendmail', {
                 method: 'POST',
                 headers: {
-                    // O Apps Script espera JSON no body
-                    'Content-Type': 'application/json' 
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(spreadsheetData)
+                body: JSON.stringify(formData)
             });
 
             if (contactStatus) {
                 contactStatus.style.display = 'none';
             }
-            
-            // O Apps Script sempre retorna um JSON, mesmo em caso de sucesso
-            const data = await response.json(); 
 
-            if (data.result === 'error') {
-                console.error('Erro ao salvar na planilha:', data.message);
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error(errorData.error || 'Erro desconhecido ao enviar email.');
                 contactError.innerHTML = 'Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.';
                 contactError.style.display = 'block';
                 return;
             }
 
-            // Sucesso!
-            console.log(data.message); 
+            const data = await response.json();
+            console.log(data.message);
 
-            contactError.innerHTML = 'Sua mensagem foi enviada e registrada com sucesso na planilha!';
+            contactError.innerHTML = 'Sua mensagem foi enviada com sucesso!';
             contactError.style.display = 'block';
             contactForm.reset();
-
         } catch (error) {
             if (contactStatus) {
                 contactStatus.style.display = 'none';
