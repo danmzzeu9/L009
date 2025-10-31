@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 dotenv.config();
+
 const app = express();
 
 app.set('trust proxy', 1);
@@ -23,8 +24,9 @@ const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 
-app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cors(corsOptions));
+
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
