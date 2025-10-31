@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 
-app.set('trust proxy', 1);
+app.set('trust proxy', 'loopback');
 
 const allowedOrigins = [
   'https://l009.com.br',
@@ -24,9 +24,8 @@ const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 
-app.use(express.json());
 app.use(cors(corsOptions));
-
+app.use(express.json());
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
