@@ -4,7 +4,7 @@ const contactStatus = document.getElementById('contact-status');
 const contactButton = document.getElementById('contact-button');
 
 // *** SUBSTITUA ESTE VALOR PELA URL DO SEU GOOGLE APPS SCRIPT ***
-const SPREADSHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxs4gwe4OzwEmn4JFSYlmb5aa6aQK519nnYoMd5r509ZpWOGfAYh_d_4KPPLIGMmvYW/exec';
+const SPREADSHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw1GQSqZX3oBHS4122n3BrUund3CGr6AD-pmIgJ39OHOPzFveX3t3J5iCKOxgngsO58/exec';
 
 contactForm.addEventListener('submit', async function(event) {
     event.preventDefault();
