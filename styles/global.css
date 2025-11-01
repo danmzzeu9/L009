@@ -7,8 +7,9 @@
     --primary: #fff;
     --secondary: #bababa;
     --tertiary: #666;
-    --divider: #444;
+    --divider: #333;
     --card-background: #000;
+    --card-border: #151515;
 }
 
 *,
