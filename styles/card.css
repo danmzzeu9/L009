@@ -22,13 +22,25 @@
     right: var(--border-size);
     bottom: var(--border-size);
     z-index: 0;
-    background-image: conic-gradient(transparent 0deg 60deg, var(--theme) 150deg 240deg, transparent 150deg);
-    animation: cardBorderForward 3s linear infinite;
+    background-image: conic-gradient(
+        from -90deg, 
+        transparent 0deg 20deg,
+        var(--theme) 20deg 40deg,
+        #000 50deg 70deg,
+        transparent 70deg 360deg
+    );
+    animation: cardBorderForward 3s linear infinite alternate;
 }
 
 .card:nth-of-type(even) .card-border {
-    background-image: conic-gradient(var(--theme) 0deg 60deg, transparent 150deg 240deg, var(--theme) 150deg);
-    animation: cardBorderBackward 4s linear infinite;
+    background-image: conic-gradient(
+        from 90deg, 
+        transparent 0deg 20deg, 
+        var(--theme) 20deg 40deg, 
+        #000 50deg 70deg, 
+        transparent 70deg 360deg
+    );
+    animation: cardBorderBackward 2s linear infinite alternate; 
 }
 
 @keyframes cardBorderForward {
