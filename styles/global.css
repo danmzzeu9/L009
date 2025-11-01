@@ -38,9 +38,6 @@ html {
 }
 
 body { 
-    background-image: url('../images/texture.png');
-    background-repeat: repeat;
-    background-position: center;
     background-color: #000;
 }
 
